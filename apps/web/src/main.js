@@ -36,7 +36,7 @@ element('app').innerHTML = `
   <main class="mx-auto max-w-5xl p-5 md:p-10">
     <header class="mb-8">
       <p class="font-semibold text-teal-700">MONEYCLOUD · LABORATORIO CLOUD</p>
-      <h1 class="mt-2 text-3xl font-bold">Mis finanzas</h1>
+      <h1 class="mt-2 text-3xl font-bold">Finanzas de Luis Alejandro Rodriguez Luna</h1>
       <p class="text-slate-500">Demo académica. No introduzcas datos financieros reales.</p>
     </header>
 
