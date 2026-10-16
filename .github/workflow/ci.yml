@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            apps/api/package-lock.json
+            apps/web/package-lock.json
+
+      - name: Install API dependencies
+        run: npm ci --include=dev
+        working-directory: apps/api
+
+      - name: Verify Vitest is installed
+        run: npm ls vitest --depth=0
+        working-directory: apps/api
+
+      - name: Install web dependencies
+        run: npm ci
+        working-directory: apps/web
+
+      - name: API tests
+        run: npm test
+
+      - name: Build Frontend
+        run: npm run build
+
+      - name: Build Api Docker Image
+        run: docker build -f apps/api/Dockerfile -t moneycloud-api:ci .
